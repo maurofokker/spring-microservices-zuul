@@ -33,8 +33,13 @@
     
     # Zuul configurations
     zuul.routes.somePath.url=http://localhost:7777
+    zuul.routes.somePath.path=/somePath/**
+    zuul.prefix=/v1
   ```
   * `ribbon.eureka.enabled=false` don't use eureka because is going to be manually configured zuul
   * `server.port=8080` server run in port 8080
   * `zuul.routes.somePath.url=http://localhost:7777` zuul will proxy from `http://localhost:8080/somePath/service` to `http://localhost:7777/service`
-   
+    * `somePath` pattern that must be found within the URL in order for the proxying to occur to the micro service
+    * to make above more explicit add `zuul.routes.somePath.path=/somePath/**` property in order to avoid confusion
+    * if above is configured with different path (i.e. _/otherPath/**_) then routing will be from `http://localhost:8080/otherPath/service` to `http://localhost:7777/service`
+  * `zuul.prefix=/v1` add a prefix to the Rest API -> `http://localhost:8080/v1/somePath/service`
