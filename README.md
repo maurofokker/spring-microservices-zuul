@@ -25,3 +25,16 @@
 
 * This is a form of a reverse proxy using `Zuul` server and the `simple-service-3` represents a micro service that is going
   to be proxied by `Zuul` gatekeeper edge service
+* Enable `@EnableZuulProxy` annotation
+* Modify `application.properties` file
+  ```properties
+    ribbon.eureka.enabled=false
+    server.port=8080
+    
+    # Zuul configurations
+    zuul.routes.somePath.url=http://localhost:7777
+  ```
+  * `ribbon.eureka.enabled=false` don't use eureka because is going to be manually configured zuul
+  * `server.port=8080` server run in port 8080
+  * `zuul.routes.somePath.url=http://localhost:7777` zuul will proxy from `http://localhost:8080/somePath/service` to `http://localhost:7777/service`
+   
